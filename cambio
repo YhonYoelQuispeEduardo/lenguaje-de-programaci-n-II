@@ -1,0 +1,43 @@
+#include <iostream>
+#define MAS +
+#define MENOS -
+#define POR *
+#define ENTRE /
+#define IGUALQUE ==
+#define MENORQUE <
+#define MAYORQUE >
+#define MENORIGUAL <=
+#define MAYORIGUAL >=
+
+using namespace std;
+
+int main() {
+    // Variables
+    int a = 10;
+    int b = 5;
+    int c = 20;
+    
+    int suma = a MAS b;
+    int resta = c MENOS a;
+    int multiplicacion = b POR c;
+    int division = c ENTRE b;
+    
+    cout << "Suma: " << a << " + " << b << " = " << suma << endl;
+    cout << "Resta: " << c << " - " << a << " = " << resta << endl;
+    cout << "Multiplicacion: " << b << " * " << c << " = " << multiplicacion << endl;
+    cout << "Division: " << c << " / " << b << " = " << division << endl;
+
+    bool esIgual = a IGUALQUE b;
+    bool esMenor = a MENORQUE c;
+    bool esMayor = c MAYORQUE b;
+    bool esMenorIgual = b MENORIGUAL a;
+    bool esMayorIgual = c MAYORIGUAL a;
+    
+    cout << "¿" << a << " == " << b << "? " << (esIgual ? "Verdadero" : "Falso") << endl;
+    cout << "¿" << a << " < " << c << "? " << (esMenor ? "Verdadero" : "Falso") << endl;
+    cout << "¿" << c << " > " << b << "? " << (esMayor ? "Verdadero" : "Falso") << endl;
+    cout << "¿" << b << " <= " << a << "? " << (esMenorIgual ? "Verdadero" : "Falso") << endl;
+    cout << "¿" << c << " >= " << a << "? " << (esMayorIgual ? "Verdadero" : "Falso") << endl;
+
+    return 0;
+}
