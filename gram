@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+string cifradoCesar(const string& texto, int desplazamiento) {
+    string resultado = texto;
+    for (char& c : resultado) {
+        if (isalpha(c)) {
+            char limite = islower(c) ? 'a' : 'A';
+            c = limite + (c - limite + desplazamiento) % 26;
+        }
+    }
+    return resultado;
+}
+
+// Función para cifrado de sustitución
+string cifradoSustitucion(const string& texto, const string& clave) {
+    string resultado = texto;
+    unordered_map<char, char> mapaSustitucion;
+    for (int i = 0; i < 26; ++i) {
+        mapaSustitucion['a' + i] = clave[i];
+        mapaSustitucion['A' + i] = toupper(clave[i]);
+    }
+    for (char& c : resultado) {
+        if (isalpha(c)) {
+            c = mapaSustitucion[c];
+        }
+    }
+    return resultado;
+}
+
+// Función para cifrado XOR
+string cifradoXOR(const string& texto, char clave) {
+    string resultado = texto;
+    for (char& c : resultado) {
+        c ^= clave;
+    }
+    return resultado;
+}
+
+// Función para calcular la entropía de Shannon
+double calcularEntropiaShannon(const string& texto) {
+    unordered_map<char, int> frecuencia;
+    for (char c : texto) {
+        frecuencia[c]++;
+    }
+    double entropia = 0.0;
+    int totalCaracteres = texto.size();
+    for (const auto& par : frecuencia) {
+        double probabilidad = static_cast<double>(par.second) / totalCaracteres;
+        entropia -= probabilidad * log2(probabilidad);
+    }
+    return entropia;
+}
+
+int main() {
+    // Semilla para aleatoriedad
+    srand(static_cast<unsigned int>(time(0)));
+
+    string texto = "hola amiguitos como estan";
+    cout << "El texto a cifrar: " << texto << endl;
+
+    // Cifrado César
+    int desplazamiento = 3;
+    string textoCifradoCesar = cifradoCesar(texto, desplazamiento);
+    cout << "Texto cifrado con Cifrado Cesar: " << textoCifradoCesar << endl;
+    double entropiaCesar = calcularEntropiaShannon(textoCifradoCesar);
+    cout << "Entropia del cifrado Cesar: " << entropiaCesar << endl;
+
+    // Cifrado de sustitución
+    string claveSustitucion = "zyxwvutsrqponmlkjihgfedcba";
+    string textoCifradoSustitucion = cifradoSustitucion(texto, claveSustitucion);
+    cout << "Texto cifrado con Cifrado de Sustitucion: " << textoCifradoSustitucion << endl;
+    double entropiaSustitucion = calcularEntropiaShannon(textoCifradoSustitucion);
+    cout << "Entropia del cifrado de Sustitucion: " << entropiaSustitucion << endl;
+
+    // Cifrado XOR
+    char claveXOR = 'K';  // Puedes cambiar la clave a otro carácter
+    string textoCifradoXOR = cifradoXOR(texto, claveXOR);
+    cout << "Texto cifrado con Cifrado de XOR: " << textoCifradoXOR << endl;
+    double entropiaXOR = calcularEntropiaShannon(textoCifradoXOR);
+    cout << "Entropia del cifrado de XOR: " << entropiaXOR << endl;
+
+    return 0;
+}
